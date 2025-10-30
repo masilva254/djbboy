@@ -1,21 +1,26 @@
 {
   "name": "mixhub",
   "version": "1.0.0",
-  "description": "Next.js + Supabase full-stack app for DJs and music sharing.",
+  "description": "Next.js + TypeScript + TailwindCSS + Supabase + Multer + Axios + Pino full-stack app for DJs and music sharing.",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000",
-    "build": "next build",
+    "build": "next build && next lint && npm run type-check",
     "start": "next start -p 3000",
     "lint": "eslint . --ext .ts,.tsx --fix",
     "type-check": "tsc --noEmit",
-    "deploy": "npm run build && npm start",
+    "format": "prettier --write .",
     "prepare": "husky install",
+    "deploy": "npm run build && npm start",
     "postinstall": "next telemetry disable"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.17",
+    "@heroicons/react": "^2.1.5",
     "@supabase/supabase-js": "^2.46.0",
     "axios": "^1.7.4",
+    "framer-motion": "^11.2.10",
+    "lucide-react": "^0.417.0",
     "multer": "^1.4.5-lts.1",
     "next": "15.0.0",
     "pino": "^9.2.0",
@@ -27,9 +32,14 @@
     "@types/node": "^22.7.4",
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.4",
+    "autoprefixer": "^10.4.20",
     "eslint": "8.57.0",
     "eslint-config-next": "15.0.0",
     "husky": "^9.0.10",
+    "postcss": "^8.4.47",
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.5.14",
+    "tailwindcss": "^3.4.14",
     "typescript": "^5.6.3"
   },
   "engines": {
@@ -42,11 +52,14 @@
   "keywords": [
     "nextjs",
     "typescript",
+    "tailwindcss",
     "supabase",
     "render",
     "multer",
     "pino",
-    "axios"
+    "axios",
+    "dj",
+    "music-sharing"
   ],
   "license": "MIT"
 }
