@@ -1,0 +1,13 @@
+{
+  "extends": ["next/core-web-vitals", "eslint:recommended"],
+  "rules": {
+    "no-unused-vars": "warn",
+    "react-hooks/exhaustive-deps": "off",
+    "@next/next/no-img-element": "off"
+  },
+  "settings": {
+    "next": {
+      "rootDir": ["pages/", "components/", "lib/"]
+    }
+  }
+}
