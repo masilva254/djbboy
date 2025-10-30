@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  background-color: #0f0f0f;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  scroll-behavior: smooth;
+}
+
+a {
+  @apply text-primary hover:underline;
+}
+
+.btn {
+  @apply bg-primary text-black px-4 py-2 rounded-lg font-semibold hover:bg-green-500 transition-all duration-300 shadow-glow;
+}
+
+.card {
+  @apply bg-secondary p-6 rounded-2xl shadow-xl border border-neutral-800 hover:shadow-glow transition-all duration-300;
+}
