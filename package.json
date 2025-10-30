@@ -1,17 +1,17 @@
 {
   "name": "mixhub",
   "version": "1.0.0",
-  "description": "Next.js + TypeScript + TailwindCSS + Supabase + Multer + Axios + Pino full-stack app for DJs and music sharing.",
+  "description": "Full-stack Next.js 15 app built with TypeScript, TailwindCSS, Supabase, Multer, Axios, and Pino — designed for DJs and music sharing.",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build && next lint && npm run type-check",
     "start": "next start -p 3000",
-    "lint": "eslint . --ext .ts,.tsx --fix",
+    "lint": "eslint . --ext .ts,.tsx",
     "type-check": "tsc --noEmit",
     "format": "prettier --write .",
     "prepare": "husky install",
-    "deploy": "npm run build && npm start",
+    "deploy": "npm ci && npm run build && npm start",
     "postinstall": "next telemetry disable"
   },
   "dependencies": {
@@ -24,16 +24,18 @@
     "multer": "^1.4.5-lts.1",
     "next": "15.0.0",
     "pino": "^9.2.0",
-    "react": "^18.3.0",
-    "react-dom": "^18.3.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@types/multer": "^1.4.7",
     "@types/node": "^22.7.4",
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.4",
+    "@typescript-eslint/eslint-plugin": "^8.12.1",
+    "@typescript-eslint/parser": "^8.12.1",
     "autoprefixer": "^10.4.20",
-    "eslint": "8.57.0",
+    "eslint": "^8.57.0",
     "eslint-config-next": "15.0.0",
     "husky": "^9.0.10",
     "postcss": "^8.4.47",
@@ -47,19 +49,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/<yourusername>/mixhub.git"
+    "url": "https://github.com/masilva254/mixhub.git"
   },
   "keywords": [
     "nextjs",
     "typescript",
     "tailwindcss",
     "supabase",
-    "render",
     "multer",
-    "pino",
     "axios",
+    "pino",
+    "render",
     "dj",
-    "music-sharing"
+    "music",
+    "audio",
+    "mixcloud",
+    "sharing"
   ],
   "license": "MIT"
 }
