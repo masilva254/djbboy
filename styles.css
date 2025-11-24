@@ -1,0 +1,76 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Poppins, sans-serif;
+  background: radial-gradient(circle at top, #0a0f24, #000);
+  color: white;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+.title {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 40px;
+  background: linear-gradient(45deg, #00eaff, #6f00ff);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.search-box {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+input {
+  width: 60%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1.1rem;
+  outline: none;
+}
+
+button {
+  background: #00eaff;
+  border: none;
+  padding: 12px 20px;
+  color: #000;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.results {
+  margin-top: 40px;
+  display: grid;
+  gap: 20px;
+}
+
+.card {
+  background: rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 18px;
+}
+
+.card a {
+  display: inline-block;
+  margin-top: 10px;
+  background: #00eaff;
+  padding: 10px 16px;
+  border-radius: 10px;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
