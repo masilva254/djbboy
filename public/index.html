@@ -1,44 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MixHub — DJ Mix Downloads</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MixHub Backend</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #121212;
+            color: white;
+        }
+        .endpoint {
+            background: #1e1e1e;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        code {
+            background: #2d2d2d;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
 </head>
-
 <body>
-  <div class="container">
-    <h1 class="title">MixHub <span>🎧</span></h1>
+    <h1>🎵 MixHub Backend Server</h1>
+    <p>Your production backend is running successfully!</p>
     
-    <div class="search-box">
-      <input id="searchInput" type="text" placeholder="Search DJ Bboy Kenya mixes…">
-      <button onclick="search()">Search</button>
+    <div class="endpoint">
+        <h3>📺 Channel Videos</h3>
+        <code>GET /api/channel/videos</code>
+        <p>Get all videos from your YouTube channel</p>
     </div>
-
-    <div id="results" class="results"></div>
-  </div>
-
-  <script>
-    async function search() {
-      const query = document.getElementById("searchInput").value;
-      const res = await fetch(`/search?q=${encodeURIComponent(query)}`);
-      const data = await res.json();
-
-      const container = document.getElementById("results");
-      container.innerHTML = "";
-
-      data.results.forEach(video => {
-        container.innerHTML += `
-          <div class="card">
-            <img src="${video.thumbnail}" />
-            <h3>${video.title}</h3>
-            <p>${video.publishedAt}</p>
-            <a href="/download?videoId=${video.videoId}">Download Mix</a>
-          </div>
-        `;
-      });
-    }
-  </script>
+    
+    <div class="endpoint">
+        <h3>🔍 Search Videos</h3>
+        <code>GET /api/search?q=search_term</code>
+        <p>Search videos in your channel (unlimited)</p>
+    </div>
+    
+    <div class="endpoint">
+        <h3>📥 Download Options</h3>
+        <code>GET /api/download/options/:videoId</code>
+        <p>Get available download formats for a video</p>
+    </div>
+    
+    <div class="endpoint">
+        <h3>💾 Download</h3>
+        <code>GET /api/download?videoId=XXX&type=mp3&quality=720p</code>
+        <p>Download video/audio (unlimited)</p>
+    </div>
+    
+    <div class="endpoint">
+        <h3>❤️ Preferences</h3>
+        <code>POST /api/preferences</code>
+        <p>Save user download preferences</p>
+    </div>
+    
+    <div class="endpoint">
+        <h3>📊 Health Check</h3>
+        <code>GET /api/health</code>
+        <p>Check server status</p>
+    </div>
 </body>
-</html>
+  </html>
