@@ -562,7 +562,7 @@
             
             try {
                 // Call your backend API to get channel videos
-                const response = await fetch('/api/channel/videos');
+                const response = await fetch('https://djbboy.vercel.app/api/channel/videos');
                 const data = await response.json();
                 
                 if (data.success && data.data && data.data.length > 0) {
@@ -628,7 +628,4 @@
             });
         }
 
-        // Sample data for demo (remove in production)
-        function loadSampleMixes() {
-            const mixesGrid = document.getElementById('mixesGrid');
-            const sampl
+        
