@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MixHub - DJ BBOY Mixes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Dark Theme (Default) */
+            --bg-primary: #0a0f2d;
+            --bg-secondary: #1a1f3d;
+            --bg-card: #151a35;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3ff;
+            --accent: #00f0ff;
+            --accent-glow: 0 0 20px rgba(0, 240, 255, 0.7);
+            --neon-pink: #ff00ff;
+            --neon-blue: #00f0ff;
+            --neon-purple: #b967ff;
+            --gradient: linear-gradient(135deg, #00f0ff, #b967ff, #ff00ff);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .light-theme {
+            /* Light Theme */
+            --bg-primary: #f8f4e9;
+            --bg-secondary: #fffaf0;
+            --bg-card: #ffffff;
+            --text-primary: #2d2d2d;
+            --text-secondary: #666666;
+            --accent: #ff6b6b;
+            --accent-glow: 0 0 0px rgba(0, 0, 0, 0);
+            --neon-pink: #ff6b6b;
+            --neon-blue: #4ecdc4;
+            --neon-purple: #6a5acd;
+            --gradient: linear-gradient(135deg, #ff6b6b, #4ecdc4, #6a5acd);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--bg-secondary);
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: var(--accent-glow);
+        }
+
+        .theme-toggle {
+            background: var(--bg-card);
+            border: none;
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: var(--shadow);
+        }
+
+        /* Dashboard Header */
+        .dashboard-header {
+            text-align: center;
+            padding: 40px 0 20px;
+        }
+
+        .dashboard-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .dashboard-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Mixes Grid */
+        .mixes-section {
+            padding: 20px 0 60px;
+        }
+
+        .mixes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 20px 0;
+        }
+
+        .mix-card {
+            background: var(--bg-card);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .mix-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .mix-thumbnail {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mix-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .mix-thumbnail .thumbnail-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient);
+            color: white;
+            font-size: 3rem;
+        }
+
+        .mix-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .mix-card:hover .mix-overlay {
+            opacity: 1;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .action-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: var(--gradient);
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--accent-glow);
+            transition: transform 0.3s;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .mix-info {
+            padding: 20px;
+        }
+
+        .mix-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .mix-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 15px;
+        }
+
+        .mix-date {
+            color: var(--text-secondary);
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--bg-secondary);
+            border-top: 4px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Download Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: var(--shadow);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .download-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .download-option {
+            padding: 15px;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .download-option:hover {
+            background: var(--bg-primary);
+            border-color: var(--accent);
+        }
+
+        .option-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .option-type {
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .option-quality {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .option-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-secondary);
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .developer {
+            margin-top: 10px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .mixes-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 20px;
+            }
+            
+            .dashboard-title {
+                font-size: 2rem;
+            }
+            
+            .header-content {
+                justify-content: center;
+            }
+            
+            .theme-toggle {
+                position: absolute;
+                right: 20px;
+            }
+        }
+
+        /* Neon Elements for Dark Theme */
+        body:not(.light-theme) .neon-border {
+            position: relative;
+        }
+
+        body:not(.light-theme) .neon-border:before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: var(--gradient);
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">MixHub</div>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard -->
+    <main>
+        <div class="container">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">DJ BBOY Mixes</h1>
+                <p class="dashboard-subtitle">Latest mixes from the channel - Play and download instantly</p>
+            </div>
+
+            <section class="mixes-section">
+                <div class="mixes-grid" id="mixesGrid">
+                    <!-- Mixes will be loaded here -->
+                    <div class="loading">
+                        <div class="loading-spinner"></div>
+                        <p>Loading DJ BBOY mixes...</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Download Modal -->
+    <div class="modal" id="downloadModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Download Options</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="download-options" id="downloadOptions">
+                <!-- Download options will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="copyright">
+                &copy; 2025 MixHub. All rights reserved.
+            </div>
+            <div class="developer">
+                Created by developer wanga
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const icon = themeToggle.querySelector('i');
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-theme');
+            
+            if (document.body.classList.contains('light-theme')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+
+        // Modal functionality
+        const downloadModal = document.getElementById('downloadModal');
+        const closeModal = document.getElementById('closeModal');
+        const downloadOptions = document.getElementById('downloadOptions');
+
+        let currentVideo = null;
+
+        function openDownloadModal(video) {
+            currentVideo = video;
+            downloadOptions.innerHTML = `
+                <div class="download-option" onclick="downloadMix('video', '720p')">
+                    <div class="option-header">
+                        <span class="option-type">HD Video</span>
+                        <span class="option-quality">720p</span>
+                    </div>
+                    <div class="option-description">High definition video with audio</div>
+                </div>
+                <div class="download-option" onclick="downloadMix('audio', '320kbps')">
+                    <div class="option-header">
+                        <span class="option-type">High Quality Audio</span>
+                        <span class="option-quality">320kbps</span>
+                    </div>
+                    <div class="option-description">Best audio quality</div>
+                </div>
+                <div class="download-option" onclick="downloadMix('audio', '128kbps')">
+                    <div class="option-header">
+                        <span class="option-type">Standard Audio</span>
+                        <span class="option-quality">128kbps</span>
+                    </div>
+                    <div class="option-description">Good quality, smaller file</div>
+                </div>
+                <div class="download-option" onclick="downloadMix('mp3', 'mp3')">
+                    <div class="option-header">
+                        <span class="option-type">MP3 Format</span>
+                        <span class="option-quality">MP3</span>
+                    </div>
+                    <div class="option-description">Universal MP3 format</div>
+                </div>
+            `;
+            downloadModal.style.display = 'flex';
+        }
+
+        function closeDownloadModal() {
+            downloadModal.style.display = 'none';
+            currentVideo = null;
+        }
+
+        closeModal.addEventListener('click', closeDownloadModal);
+        downloadModal.addEventListener('click', (e) => {
+            if (e.target === downloadModal) {
+                closeDownloadModal();
+            }
+        });
+
+        // Download function
+        function downloadMix(type, quality) {
+            if (!currentVideo) return;
+            
+            const videoId = currentVideo.videoId;
+            const title = currentVideo.title;
+            
+            // Show downloading message
+            alert(`Starting download: ${title}\nFormat: ${type} | Quality: ${quality}`);
+            
+            // In a real implementation, this would call your backend API
+            console.log(`Downloading: ${title} (${videoId}) as ${type} in ${quality}`);
+            
+            // Close modal after download starts
+            closeDownloadModal();
+        }
+
+        // Play function
+        function playMix(video) {
+            // Open YouTube video in new tab
+            window.open(`https://www.youtube.com/watch?v=${video.videoId}`, '_blank');
+        }
+
+        // Load channel mixes
+        async function loadChannelMixes() {
+            const mixesGrid = document.getElementById('mixesGrid');
+            
+            try {
+                // Call your backend API to get channel videos
+                const response = await fetch('/api/channel/videos');
+                const data = await response.json();
+                
+                if (data.success && data.data && data.data.length > 0) {
+                    mixesGrid.innerHTML = '';
+                    
+                    data.data.forEach(mix => {
+                        const mixCard = document.createElement('div');
+                        mixCard.className = 'mix-card neon-border';
+                        mixCard.innerHTML = `
+                            <div class="mix-thumbnail">
+                                <img src="${mix.thumbnail}" alt="${mix.title}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="thumbnail-placeholder" style="display: none;">
+                                    <i class="fas fa-music"></i>
+                                </div>
+                                <div class="mix-overlay">
+                                    <div class="action-buttons">
+                                        <button class="action-btn" onclick="playMix(${JSON.stringify(mix).replace(/"/g, '&quot;')})">
+                                            <i class="fas fa-play"></i>
+                                        </button>
+                                        <button class="action-btn" onclick="openDownloadModal(${JSON.stringify(mix).replace(/"/g, '&quot;')})">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mix-info">
+                                <h3 class="mix-title">${mix.title}</h3>
+                                <div class="mix-meta">
+                                    <span class="mix-date">${formatDate(mix.publishedAt)}</span>
+                                    <span class="mix-views">DJ BBOY</span>
+                                </div>
+                            </div>
+                        `;
+                        mixesGrid.appendChild(mixCard);
+                    });
+                } else {
+                    mixesGrid.innerHTML = `
+                        <div class="loading">
+                            <p>No mixes found in the channel.</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading mixes:', error);
+                mixesGrid.innerHTML = `
+                    <div class="loading">
+                        <p>Error loading mixes. Please try again later.</p>
+                    </div>
+                `;
+                
+                // Load sample data for demo
+                loadSampleMixes();
+            }
+        }
+
+        // Format date function
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        // Sample data for demo (remove in production)
+        function loadSampleMixes() {
+            const mixesGrid = document.getElementById('mixesGrid');
+            const sampleMixes = [
+                {
+                    videoId: 'sample1',
+                    title: 'ARBANTONE MIX - Best of Anguka Nayo, Set It, FatherMoh',
+                    thumbnail: '',
+                    publishedAt: new Date().toISOString()
+                },
+                {
+                    videoId: 'sample2', 
+                    title: 'AFROBEATS DANCE MIX 2025 - Latest Hits',
+                    thumbnail: '',
+                    publishedAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
+                },
+                {
+                    videoId: 'sample3',
+                    title: 'BEST OF SARUU & MAANDY - Special Mix',
+                    thumbnail: '',
+                    publishedAt: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString()
+                }
+            ];
+            
+            mixesGrid.innerHTML = '';
+            sampleMixes.forEach(mix => {
+                const mixCard = document.createElement('div');
+                mixCard.className = 'mix-card neon-border';
+                mixCard.innerHTML = `
+                    <div class="mix-thumbnail">
+                        <div class="thumbnail-placeholder">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <div class="mix-overlay">
+                            <div class="action-buttons">
+                                <button class="action-btn" onclick="playMix(${JSON.stringify(mix).replace(/"/g, '&quot;')})">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                                <button class="action-btn" onclick="openDownloadModal(${JSON.stringify(mix).replace(/"/g, '&quot;')})">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mix-info">
+                        <h3 class="mix-title">${mix.title}</h3>
+                        <div class="mix-meta">
+                            <span class="mix-date">${formatDate(mix.publishedAt)}</span>
+                            <span class="mix-views">DJ BBOY</span>
+                        </div>
+                    </div>
+                `;
+                mixesGrid.appendChild(mixCard);
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadChannelMixes();
+        });
+    </script>
+</body>
+</html>
